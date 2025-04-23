@@ -6,20 +6,17 @@
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
+  <nav><a href="/login"><img id="logo" src="/assets/img/logo.png" alt="songify logo"/></a>
     <div class="navlink"><a href="/logout">Log out</a></div>
-    <div class="navlink"><a href="/maker">Home</a></div>
-    <div class="navlink"><a id="aboutButton" href="/about">About</a></div>
+    <div class="navlink"><a href="/home">Home</a></div>
   </nav>
 
   <section id="app">
 
   </section>
 
-  <div id="domoMessage" class='hidden'>
-    <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3>
-    <img id="domo" src="assets/img/domo.png" alt="domo"/>
+  <div id="errorBox" class='hidden'>
+    <p><span id="errorMessage"></span></p>
   </div>
   <script src="/assets/appBundle.js"></script>
 </body>
