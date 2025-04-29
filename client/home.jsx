@@ -20,14 +20,29 @@ const handleSong = (e, onSongAdded) => {
     return false;
 };
 
-const SongForm = (props) => {
+const handlePlaylist = (e, onPlaylistAdded) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const name = e.target.querySelector('#playlistName').value;
+
+    if (!name) {
+        helper.handleError('Playlist name required');
+        return false;
+    }
+    console.log('submitted');
+    helper.sendPost(e.target.action, {name}, onPlaylistAdded);
+    return false;
+}
+
+const SongWindow = (props) => {
     return(
-        <form id='songForm'
+        <form id='SongWindow'
             onSubmit={(e) => handleSong(e, props.triggerReload)}
-            name='songForm'
+            name='SongWindow'
             action='/home'
             method='POST'
-            className='songForm'
+            className='SongWindow'
         >
             <label htmlFor="title">Title: </label>
             <input type="text" name="title" id="songTitle" placeholder='Song Title' />
@@ -37,6 +52,22 @@ const SongForm = (props) => {
         </form>
     );
 };
+
+const PlaylistWindow = (props => {
+    return(
+        <form id='PlaylistWindow'
+            onSubmit={(e) => handlePlaylist(e, props.triggerReload)}
+            name='PlaylistWindow'
+            action='/home'
+            method='POST'
+            className='PlaylistWindow'
+        >
+            <label htmlFor="name">Name: </label>
+            <input type="text" name="name" id="playlistName" placeholder='Playlist Name' />
+            <input type="submit" className='addPlaylistSubmit' value='Add Playlist' />
+        </form>
+    );
+})
 
 const SongList = (props) => {
     const [songs, setSongs] = useState(props.songs);
@@ -81,7 +112,7 @@ const App = () =>{
     return (
         <div>
             <div id='addSong'>
-                <SongForm triggerReload={() => setReloadSongs(!reloadSongs)} />
+                <SongWindow triggerReload={() => setReloadSongs(!reloadSongs)} />
             </div>
             <div id='songs'>
                 <SongList songs={[]} reloadSongs={reloadSongs} />
@@ -91,7 +122,22 @@ const App = () =>{
 };
 
 const init = () => {
+    const homeButton = document.getElementById('homeButton');
+    const playlistButton = document.getElementById('playlistButton');
+
     const root = createRoot(document.getElementById('app'));
+
+    homeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        root.render( <App />);
+        return false;
+    });
+    
+    playlistButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        root.render( <PlaylistWindow /> );
+    });
+
     root.render( <App />);
 };
 

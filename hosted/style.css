@@ -1,30 +1,4 @@
 
-
-#aboutContent {
-    padding: 50px;
-}
-
-#aboutImg {
-    width: 300px;
-    height: 300px;
-    float: left;
-}
-
-#aboutText {
-    float: left;
-    margin-left: 50px;
-}
-
-#aboutText h1 {
-    font-size: 3em;
-}
-
-#aboutText p {
-    font-size: 1.25em;
-}
-
-/* -------------------------------------------------------------------- */
-
 html, body {
     height: 100%;
     width: 100%;
@@ -244,7 +218,7 @@ nav:nth-child(1) {
 .song:hover {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
-    transition: background-color 2.6s ease-out;
+    transition: background-color .2s ease-out;
     background-color: #ffc0cb;
 }
 

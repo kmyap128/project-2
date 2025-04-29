@@ -12,12 +12,12 @@ const PlaylistSchema = new mongoose.Schema({
   },
   songs: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Song', 
+    ref: 'Song',
   }],
   user: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: 'Account', 
+    ref: 'Account',
   },
   createdDate: {
     type: Date,
