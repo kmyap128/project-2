@@ -58,7 +58,7 @@ const PlaylistWindow = (props => {
         <form id='PlaylistWindow'
             onSubmit={(e) => handlePlaylist(e, props.triggerReload)}
             name='PlaylistWindow'
-            action='/home'
+            action='/playlist'
             method='POST'
             className='PlaylistWindow'
         >
@@ -106,7 +106,43 @@ const SongList = (props) => {
     );
 };
 
-const App = () =>{
+const PlaylistList = (props) => {
+    const [playlists, setPlaylists] = useState(props.playlists);
+
+    useEffect(() => {
+        const loadPlaylistsFromServer = async () => {
+            const response = await fetch('/getPlaylists');
+            const data = await response.json();
+            setPlaylists(data.playlists);
+        };
+        loadPlaylistsFromServer();
+    }, [props.reloadPlaylists]);
+
+    if(playlists.length === 0) {
+        return (
+            <div className='playlistList'>
+                <h3 className='emptyPlaylist'>No Playlists Yet!</h3>
+            </div>
+        );
+    }
+
+    const playlistNodes = playlists.map(playlist => {
+        return (
+            <div key={playlist._id} className='playlist' onClick={() => props.openPlaylistEditor(playlist._id)}>
+                <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                <h3 className='playlistName'>Name: {playlist.name}</h3>
+            </div>
+        );
+    });
+
+    return (
+        <div className='playlistList'>
+            {playlistNodes}
+        </div>
+    );
+};
+
+const SongApp = () =>{
     const [reloadSongs, setReloadSongs] = useState(false);
 
     return (
@@ -121,24 +157,116 @@ const App = () =>{
     );
 };
 
+const PlaylistApp = ( { openPlaylistEditor } ) => {
+    const [reloadPlaylists, setReloadPlaylists] = useState(false);
+
+    return (
+        <div>
+            <div id='addPlaylist'>
+                <PlaylistWindow triggerReload={() => setReloadPlaylists(!reloadPlaylists)} />
+            </div>
+            <div id='playlists'>
+                <PlaylistList playlists={[]} reloadPlaylists={reloadPlaylists} openPlaylistEditor={openPlaylistEditor}/>
+            </div>
+        </div>
+    );
+}
+
+const EditPlaylistApp = ({ playlistId }) => {
+    const [playlist, setPlaylist] = useState(null);
+    const [allSongs, setAllSongs] = useState([]);
+    const [loading, setLoading] = useState(true); 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const playlistRes = await fetch(`/getPlaylist?id=${playlistId}`);
+                const playlistData = await playlistRes.json();
+                setPlaylist(playlistData);
+
+                const songRes = await fetch('/getSongs');
+                const songData = await songRes.json();
+                setAllSongs(songData.songs);
+
+                setLoading(false); 
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setLoading(false); 
+            }
+        };
+        fetchData();
+    }, [playlistId]);
+
+    const handleAddSong = async (songId) => {
+        await fetch('/addSongToPlaylist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ playlistId, songId }),
+        });
+
+        const res = await fetch(`/getPlaylist?id=${playlistId}`);
+        const data = await res.json();
+        setPlaylist(data);
+    };
+
+    if (loading) return <div>Loading playlist...</div>;
+
+    const songsInPlaylist = playlist && Array.isArray(playlist.songs) ? playlist.songs : [];
+
+    return (
+        <div>
+            <h2>Editing Playlist: {playlist.name}</h2>
+            <h3>Songs in Playlist:</h3>
+            {songsInPlaylist.length === 0 ? (
+                <p className="emptySong">No songs in this playlist yet!</p>
+            ) : (
+                <ul>
+                    {songsInPlaylist.map(song => (
+                        <li key={song.id}>{song.title} - {song.artist}</li>
+                    ))}
+                </ul>
+            )}
+
+            <h3>Add Songs:</h3>
+            {allSongs.length === 0 ? (
+                <p className="emptySong">No available songs to add.</p>
+            ) : (
+                <ul>
+                    {allSongs.map(song => (
+                        <li key={song.id}>
+                            {song.title} - {song.artist}
+                            <button onClick={() => handleAddSong(song.id)}>Add</button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};
+
+
 const init = () => {
     const homeButton = document.getElementById('homeButton');
     const playlistButton = document.getElementById('playlistButton');
 
     const root = createRoot(document.getElementById('app'));
 
+    const renderEditPlaylist = (playlistId) => {
+        root.render(<EditPlaylistApp playlistId={playlistId} />);
+    };
+
     homeButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render( <App />);
+        root.render( <SongApp />);
         return false;
     });
     
     playlistButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render( <PlaylistWindow /> );
+        root.render( <PlaylistApp openPlaylistEditor={renderEditPlaylist} /> );
     });
 
-    root.render( <App />);
+    root.render( <SongApp />);
 };
 
 window.onload = init;

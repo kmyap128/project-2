@@ -138,7 +138,7 @@ nav:nth-child(1) {
 
 
 
-.songForm {
+.songWindow {
     border: 2px solid #6B0A07;
     height: 35px;
     width: 1000px;
@@ -149,7 +149,7 @@ nav:nth-child(1) {
     border-top-right-radius: 4px;
 }
 
-.songForm label {
+.songWindow label {
     display: inline-block;
     width: 75px;
     margin-left: 10px;
@@ -158,11 +158,11 @@ nav:nth-child(1) {
     color: white;
 }
 
-.songForm input {
+.songWindow input {
     float:left;
 }
 
-.makeSongSubmit {
+.addSongSubmit {
     transition: background-color 0.4s ease;
     display: inline;
     width: 90px;
@@ -172,11 +172,11 @@ nav:nth-child(1) {
     text-decoration: none;
 }
 
-.makeSongSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
+.addSongSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
     color: white;
 }
 
-.makeSongSubmit:hover {
+.addSongSubmit:hover {
     transition: background-color 0.4s ease;
     background-color: #6B0A07;
 }
@@ -222,6 +222,34 @@ nav:nth-child(1) {
     background-color: #ffc0cb;
 }
 
+#playlists {
+    width: 40%;
+    min-width: 400px;
+    border: 2px solid #B22F52;
+    border-radius: 4px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.playlist {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 2px solid #B22F52;
+    border-radius: 4px;
+    background-color: #B22F52;
+    padding: 10px;
+    min-height:60px;
+    overflow: hidden;
+}
+
+.playlist:hover {
+    transition: border-color 0.2s ease-out;
+    border-color: rgba(255,255,255, 0.8);
+    transition: background-color .2s ease-out;
+    background-color: #ffc0cb;
+}
 
 img.songIcon {
     margin-left: 25px;
@@ -258,10 +286,26 @@ h3.songArtist {
     font-size: 1.5em;
 }
 
+h3.playlistName {
+    float:left;
+    width: 200px;
+    font-weight: bold;
+    padding-left: 65px;
+    font-size: 1.5em;
+}
+
 .song:first-child {
     margin-top: 10px;
 }
 
 .song:last-child {
+    margin-bottom:10px;
+}
+
+.playlist:first-child {
+    margin-top: 10px;
+}
+
+.playlist:last-child {
     margin-bottom:10px;
 }

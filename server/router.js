@@ -3,6 +3,8 @@ const mid = require('./middleware');
 
 const router = (app) => {
   app.get('/getSongs', mid.requiresLogin, controllers.Song.getSongs);
+  app.get('/getPlaylists', mid.requiresLogin, controllers.Playlist.getPlaylists);
+  app.get('/getPlaylist', mid.requiresLogin, controllers.Playlist.getPlaylistById);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);

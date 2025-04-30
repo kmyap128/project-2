@@ -14,11 +14,11 @@ const PlaylistSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Song',
   }],
-  user: {
-    type: mongoose.Schema.ObjectId,
-    required: true,
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
-  },
+    required: true,
+  },  
   createdDate: {
     type: Date,
     default: Date.now,
