@@ -6,6 +6,8 @@ const router = (app) => {
   app.get('/getPlaylists', mid.requiresLogin, controllers.Playlist.getPlaylists);
   app.get('/getPlaylist', mid.requiresLogin, controllers.Playlist.getPlaylistById);
 
+  app.post('/addSongToPlaylist', mid.requiresLogin, controllers.Playlist.addSongToPlaylist);
+
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
 

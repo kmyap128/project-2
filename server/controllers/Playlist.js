@@ -34,13 +34,9 @@ const addSongToPlaylist = async (req, res) => {
   }
 
   try {
-    const playlist = await Playlist.findOne({
-      _id: playlistId,
-      owner: req.session.account._id, 
-    });
-
+    const playlist = await Playlist.findById(playlistId);
     if (!playlist) {
-      return res.status(404).json({ error: 'Playlist not found or you do not have access!' });
+      return res.status(404).json({ error: 'Playlist not found!' });
     }
 
     if (!playlist.songs.includes(songId)) {
@@ -79,10 +75,7 @@ const getPlaylistById = async (req, res) => {
   }
 
   try {
-    const playlist = await Playlist.findOne({
-      _id: id,
-      owner: req.session.account._id,
-    }).populate('songs', 'title artist').lean();
+    const playlist = await Playlist.findById(req.query.id).populate('songs');
 
     if (!playlist) {
       return res.status(404).json({ error: 'Playlist not found!' });

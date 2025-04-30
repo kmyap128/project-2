@@ -53,7 +53,7 @@ const SongWindow = (props) => {
     );
 };
 
-const PlaylistWindow = (props => {
+const PlaylistWindow = (props) => {
     return(
         <form id='PlaylistWindow'
             onSubmit={(e) => handlePlaylist(e, props.triggerReload)}
@@ -67,7 +67,7 @@ const PlaylistWindow = (props => {
             <input type="submit" className='addPlaylistSubmit' value='Add Playlist' />
         </form>
     );
-})
+};
 
 const SongList = (props) => {
     const [songs, setSongs] = useState(props.songs);
@@ -91,7 +91,7 @@ const SongList = (props) => {
 
     const songNodes = songs.map(song => {
         return (
-            <div key={song.id} className='song'>
+            <div key={song._id} className='song'>
                 <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
                 <h3 className='songTitle'>Title: {song.title}</h3>
                 <h3 className='songArtist'>Artist: {song.artist}</h3>
@@ -176,18 +176,19 @@ const EditPlaylistApp = ({ playlistId }) => {
     const [playlist, setPlaylist] = useState(null);
     const [allSongs, setAllSongs] = useState([]);
     const [loading, setLoading] = useState(true); 
+    const [reloadPlaylist, setReloadPlaylist] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const playlistRes = await fetch(`/getPlaylist?id=${playlistId}`);
                 const playlistData = await playlistRes.json();
-                setPlaylist(playlistData);
-
+                setPlaylist(playlistData.playlist);
+    
                 const songRes = await fetch('/getSongs');
                 const songData = await songRes.json();
                 setAllSongs(songData.songs);
-
+    
                 setLoading(false); 
             } catch (err) {
                 console.error('Error fetching data:', err);
@@ -195,7 +196,7 @@ const EditPlaylistApp = ({ playlistId }) => {
             }
         };
         fetchData();
-    }, [playlistId]);
+    }, [playlistId, reloadPlaylist]);
 
     const handleAddSong = async (songId) => {
         await fetch('/addSongToPlaylist', {
@@ -204,14 +205,18 @@ const EditPlaylistApp = ({ playlistId }) => {
             body: JSON.stringify({ playlistId, songId }),
         });
 
+        setReloadPlaylist(prev => !prev);
+
         const res = await fetch(`/getPlaylist?id=${playlistId}`);
         const data = await res.json();
-        setPlaylist(data);
+        setPlaylist(data.playlist);
     };
 
     if (loading) return <div>Loading playlist...</div>;
 
     const songsInPlaylist = playlist && Array.isArray(playlist.songs) ? playlist.songs : [];
+
+    console.log(songsInPlaylist.length);
 
     return (
         <div>
@@ -222,7 +227,7 @@ const EditPlaylistApp = ({ playlistId }) => {
             ) : (
                 <ul>
                     {songsInPlaylist.map(song => (
-                        <li key={song.id}>{song.title} - {song.artist}</li>
+                        <li key={song._id}>{song.title} - {song.artist}</li>
                     ))}
                 </ul>
             )}
@@ -233,9 +238,9 @@ const EditPlaylistApp = ({ playlistId }) => {
             ) : (
                 <ul>
                     {allSongs.map(song => (
-                        <li key={song.id}>
+                        <li key={song._id}>
                             {song.title} - {song.artist}
-                            <button onClick={() => handleAddSong(song.id)}>Add</button>
+                            <button onClick={() => handleAddSong(song._id)}>Add</button>
                         </li>
                     ))}
                 </ul>
