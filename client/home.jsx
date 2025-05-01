@@ -268,11 +268,21 @@ const EditPlaylistApp = ({ playlistId }) => {
             ) : (
                 <div className='editSongList'>
                     {songsInPlaylist.map(song => (
-                        <div key={song._id} className='song'>
-                            <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
-                            <h3 className='songTitle'>Title: {song.title}</h3>
-                            <h3 className='songArtist'>Artist: {song.artist}</h3>
-                        </div>
+                        song.link ? (
+                            <a href={song.link} target='_blank'>
+                                <div key={song._id} className='songLink'>
+                                    <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                                    <h3 className='songTitle'>Title: {song.title}</h3>
+                                    <h3 className='songArtist'>Artist: {song.artist}</h3>
+                                </div>
+                            </a>
+                        ) : (
+                            <div key={song._id} className='song'>
+                                    <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                                    <h3 className='songTitle'>Title: {song.title}</h3>
+                                    <h3 className='songArtist'>Artist: {song.artist}</h3>
+                            </div>
+                        )
                     ))}
                 </div>
             )}
