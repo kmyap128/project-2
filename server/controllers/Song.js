@@ -12,6 +12,7 @@ const addSong = async (req, res) => {
   const songData = {
     title: req.body.title,
     artist: req.body.artist,
+    link: req.body.link || '',
     user: req.session.account._id,
   };
 

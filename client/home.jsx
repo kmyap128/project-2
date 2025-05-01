@@ -9,6 +9,8 @@ const handleSong = (e, onSongAdded) => {
 
     const title = e.target.querySelector('#songTitle').value;
     const artist = e.target.querySelector('#songArtist').value;
+    const linkInput = e.target.querySelector('#songLink');
+    const link = linkInput ? linkInput.value : '';  
 
     if(!title || !artist ) {
         helper.handleError('All fields are required');
@@ -16,7 +18,7 @@ const handleSong = (e, onSongAdded) => {
     }
 
     console.log('submitted');
-    helper.sendPost(e.target.action, {title, artist}, onSongAdded);
+    helper.sendPost(e.target.action, {title, artist, link}, onSongAdded);
     return false;
 };
 
@@ -49,6 +51,12 @@ const SongWindow = (props) => {
                 <input type="text" name="title" id="songTitle" placeholder='Song Title' />
                 <label htmlFor="artist">Artist: </label>
                 <input type="text" name="artist" id="songArtist" placeholder='Song Artist' />
+                {props.isPremium && (
+                    <>
+                        <label htmlFor="link">Link: </label>
+                        <input type="url" name="link" id="songLink" placeholder="https://example.com" />
+                    </>
+                )}
                 <input type="submit" className='addSongSubmit' value='Add Song' />
             </div>
         </form>
@@ -94,11 +102,20 @@ const SongList = (props) => {
     }
 
     const songNodes = songs.map(song => {
-        return (
+        return song.link ? (
+            <a href={song.link} target='_blank'>
+                <div key={song._id} className='song'>
+                    <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                    <h3 className='songTitle'>Title: {song.title}</h3>
+                    <h3 className='songArtist'>Artist: {song.artist}</h3>
+                    
+                </div>
+            </a>
+        ) : (
             <div key={song._id} className='song'>
-                <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
-                <h3 className='songTitle'>Title: {song.title}</h3>
-                <h3 className='songArtist'>Artist: {song.artist}</h3>
+                    <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                    <h3 className='songTitle'>Title: {song.title}</h3>
+                    <h3 className='songArtist'>Artist: {song.artist}</h3>
             </div>
         );
     });
@@ -148,11 +165,30 @@ const PlaylistList = (props) => {
 
 const SongApp = () =>{
     const [reloadSongs, setReloadSongs] = useState(false);
+    const [isPremium, setIsPremium] = useState(false);
+
+    useEffect(() => {
+        const fetchPremium = async () => {
+            const res = await fetch('/getPremiumStatus');
+            const data = await res.json();
+            setIsPremium(data.isPremium);
+        };
+        fetchPremium();
+    }, []);
 
     return (
+        
         <div id='songPage'>
+            <button onClick={async () => {
+                const res = await fetch('/togglePremium');
+                const data = await res.json();
+                setIsPremium(data.isPremium);
+            }}>
+                {isPremium ? 'Disable Premium' : 'Enable Premium'}
+            </button>
+
             <div id='addSong'>
-                <SongWindow triggerReload={() => setReloadSongs(!reloadSongs)} />
+                <SongWindow triggerReload={() => setReloadSongs(!reloadSongs)} isPremium={isPremium} />
             </div>
             <div id='songs'>
                 <SongList songs={[]} reloadSongs={reloadSongs} />

@@ -376,12 +376,12 @@ nav:nth-child(1) {
     color: white;
 }
 
-.song:hover {
+/* .song:hover {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
     transition: background-color .2s ease-out;
     background-color: #ffc0cb;
-}
+} */
 
 #playlists {
     width: 90%;

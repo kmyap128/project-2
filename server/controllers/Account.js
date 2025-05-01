@@ -56,9 +56,20 @@ const signup = async (req, res) => {
   }
 };
 
+const getPremiumStatus = (req, res) => {
+  res.json({ isPremium: req.session.account?.isPremium || false });
+};
+
+const togglePremium = (req, res) => {
+  req.session.account.isPremium = !req.session.account.isPremium;
+  return res.json({ isPremium: req.session.account.isPremium });
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  getPremiumStatus,
+  togglePremium,
 };

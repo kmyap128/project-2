@@ -16,6 +16,11 @@ const SongSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
+  link: {
+    type: String,
+    required: false, // for profit model
+    trim: true,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -30,6 +35,7 @@ const SongSchema = new mongoose.Schema({
 SongSchema.statics.toAPI = (doc) => ({
   title: doc.title,
   artist: doc.artist,
+  link: doc.link,
 });
 
 const SongModel = mongoose.model('Song', SongSchema);

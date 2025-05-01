@@ -5,6 +5,8 @@ const router = (app) => {
   app.get('/getSongs', mid.requiresLogin, controllers.Song.getSongs);
   app.get('/getPlaylists', mid.requiresLogin, controllers.Playlist.getPlaylists);
   app.get('/getPlaylist', mid.requiresLogin, controllers.Playlist.getPlaylistById);
+  app.get('/togglePremium', controllers.Account.togglePremium);
+  app.get('/getPremiumStatus', controllers.Account.getPremiumStatus);
 
   app.post('/addSongToPlaylist', mid.requiresLogin, controllers.Playlist.addSongToPlaylist);
 
