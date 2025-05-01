@@ -37,7 +37,7 @@ const getSongs = async (req, res) => {
 
     // Check if the user is premium and add the link if they are
     const songs = docs.map((song) => ({
-      ...song.toObject(),
+      ...song,
       link: req.session.account.isPremium && song.link ? song.link : null,
     }));
 
