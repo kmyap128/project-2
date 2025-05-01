@@ -36,14 +36,10 @@ const getSongs = async (req, res) => {
     const docs = await Song.find(query).select('title artist link').lean().exec();
 
     // Check if the user is premium and add the link if they are
-    const songs = docs.map(song => {
-      if (req.session.account.isPremium && song.link) {
-        song.link = song.link;  
-      } else {
-        song.link = null; 
-      }
-      return song;
-    });
+    const songs = docs.map((song) => ({
+      ...song.toObject(),
+      link: req.session.account.isPremium && song.link ? song.link : null,
+    }));
 
     return res.json({ songs });
   } catch (err) {

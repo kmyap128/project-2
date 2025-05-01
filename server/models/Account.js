@@ -6,7 +6,6 @@
 */
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const { isTypedArray } = require('underscore');
 
 /* When generating a password hash, bcrypt (and most other password hash
    functions) use a "salt". The salt is simply extra data that gets hashed
@@ -34,9 +33,9 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isPremium: {   
+  isPremium: {
     type: Boolean,
-    default: false,  
+    default: false,
   },
   createdDate: {
     type: Date,

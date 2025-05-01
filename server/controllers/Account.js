@@ -60,7 +60,7 @@ const signup = async (req, res) => {
 };
 
 const getPremiumStatus = (req, res) => {
-  res.json({ isPremium: req.session.account?.isPremium || false });
+  res.json({ isPremium: (req.session.account && req.session.account.isPremium) || false });
 };
 
 const togglePremium = (req, res) => {

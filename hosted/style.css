@@ -146,7 +146,7 @@ nav:nth-child(1) {
 }
 
 #songBox {
-    width: 300px;
+    width: 400px;
     padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -163,12 +163,27 @@ nav:nth-child(1) {
     font-size: 1.2em;
 }
 
-#songTitle, #songArtist {
+#songTitle, #songArtist, #songlink {
     text-align: center;
-    font-size: 1.1em;
-    width: 180px;
+    width: 250px;
     border-radius: 6px;
-    padding-bottom: 20px;
+}
+
+#premiumButton {
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 200px;
+    background-color: #B22F52;
+    border-radius: 10px;
+    border-color: #6B0A07;
+    padding: 5px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .SongWindow input {
@@ -177,6 +192,7 @@ nav:nth-child(1) {
     border: none;
     font-size: 1em;
     margin-bottom: 5px;
+    padding: 10px;
 }
 
 #songPage {
@@ -209,14 +225,13 @@ nav:nth-child(1) {
     border: none;
     font-size: 1em;
     margin-bottom: 5px;
+    padding: 10px;
 }
 
 #playlistName {
     text-align: center;
-    font-size: 1.1em;
     width: 180px;
     border-radius: 6px;
-    padding-bottom: 20px;
 }
 
 #playlistPage {
@@ -229,7 +244,7 @@ nav:nth-child(1) {
 }
 
 #playlistBox {
-    width: 300px;
+    width: 400px;
     padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;

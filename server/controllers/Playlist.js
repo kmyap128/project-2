@@ -1,8 +1,8 @@
 const models = require('../models');
+
 const { Playlist } = models;
 
 const homePage = async (req, res) => res.render('app');
-
 
 const addPlaylist = async (req, res) => {
   if (!req.body.name) {
@@ -12,7 +12,7 @@ const addPlaylist = async (req, res) => {
   const playlistData = {
     name: req.body.name,
     songs: [],
-    owner: req.session.account._id, 
+    owner: req.session.account._id,
   };
 
   try {
@@ -24,7 +24,6 @@ const addPlaylist = async (req, res) => {
     return res.status(500).json({ error: 'An error occurred creating the playlist!' });
   }
 };
-
 
 const addSongToPlaylist = async (req, res) => {
   const { playlistId, songId } = req.body;
@@ -53,10 +52,10 @@ const addSongToPlaylist = async (req, res) => {
 
 const getPlaylists = async (req, res) => {
   try {
-    const query = { owner: req.session.account._id }; 
+    const query = { owner: req.session.account._id };
     const docs = await Playlist.find(query)
       .select('name songs')
-      .populate('songs', 'title artist') 
+      .populate('songs', 'title artist')
       .lean()
       .exec();
 
@@ -93,5 +92,5 @@ module.exports = {
   addPlaylist,
   addSongToPlaylist,
   getPlaylists,
-  getPlaylistById, 
+  getPlaylistById,
 };

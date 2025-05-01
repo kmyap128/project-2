@@ -18,7 +18,7 @@ const PlaylistSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
     required: true,
-  },  
+  },
   createdDate: {
     type: Date,
     default: Date.now,

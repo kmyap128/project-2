@@ -179,17 +179,16 @@ const SongApp = () =>{
     return (
         
         <div id='songPage'>
-            <button onClick={async () => {
-                const res = await fetch('/togglePremium');
-                const data = await res.json();
-                setIsPremium(data.isPremium);
-                setReloadSongs(prev => !prev); 
-            }}>
-                {isPremium ? 'Disable Premium' : 'Enable Premium'}
-            </button>
-
             <div id='addSong'>
                 <SongWindow triggerReload={() => setReloadSongs(!reloadSongs)} isPremium={isPremium} />
+                <button id='premiumButton' onClick={async () => {
+                    const res = await fetch('/togglePremium');
+                    const data = await res.json();
+                    setIsPremium(data.isPremium);
+                    setReloadSongs(prev => !prev); 
+                }}>
+                    {isPremium ? 'Disable Premium' : 'Enable Premium'}
+                </button>
             </div>
             <div id='songs'>
                 <SongList songs={[]} reloadSongs={reloadSongs} />
@@ -213,7 +212,7 @@ const PlaylistApp = ( { openPlaylistEditor } ) => {
     );
 }
 
-const EditPlaylistApp = ({ playlistId }) => {
+const EditPlaylistApp = ({ playlistId, isPremium }) => {
     const [playlist, setPlaylist] = useState(null);
     const [allSongs, setAllSongs] = useState([]);
     const [loading, setLoading] = useState(true); 
@@ -268,7 +267,7 @@ const EditPlaylistApp = ({ playlistId }) => {
             ) : (
                 <div className='editSongList'>
                     {songsInPlaylist.map(song => (
-                        song.link ? (
+                        isPremium && song.link ? (
                             <a href={song.link} target='_blank'>
                                 <div key={song._id} className='songLink'>
                                     <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
@@ -310,9 +309,12 @@ const init = () => {
     const playlistButton = document.getElementById('playlistButton');
 
     const root = createRoot(document.getElementById('app'));
+    
 
-    const renderEditPlaylist = (playlistId) => {
-        root.render(<EditPlaylistApp playlistId={playlistId} />);
+    const renderEditPlaylist = async (playlistId) => {
+        const res = await fetch('/getPremiumStatus');
+        const data = await res.json();
+        root.render(<EditPlaylistApp playlistId={playlistId} isPremium={data.isPremium} />);
     };
 
     homeButton.addEventListener('click', (e) => {
