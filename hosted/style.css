@@ -362,7 +362,7 @@ nav:nth-child(1) {
     overflow-y: auto; 
 }
 
-.song {
+.song, .songLink {
     width: 95%;
     margin: 0 auto;
     margin-top: 2px;
@@ -376,12 +376,12 @@ nav:nth-child(1) {
     color: white;
 }
 
-/* .song:hover {
+.songLink:hover {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
     transition: background-color .2s ease-out;
     background-color: #ffc0cb;
-} */
+} 
 
 #playlists {
     width: 90%;

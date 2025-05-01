@@ -104,11 +104,10 @@ const SongList = (props) => {
     const songNodes = songs.map(song => {
         return song.link ? (
             <a href={song.link} target='_blank'>
-                <div key={song._id} className='song'>
+                <div key={song._id} className='songLink'>
                     <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
                     <h3 className='songTitle'>Title: {song.title}</h3>
                     <h3 className='songArtist'>Artist: {song.artist}</h3>
-                    
                 </div>
             </a>
         ) : (
@@ -172,6 +171,7 @@ const SongApp = () =>{
             const res = await fetch('/getPremiumStatus');
             const data = await res.json();
             setIsPremium(data.isPremium);
+            setReloadSongs(prev => !prev);
         };
         fetchPremium();
     }, []);
@@ -183,6 +183,7 @@ const SongApp = () =>{
                 const res = await fetch('/togglePremium');
                 const data = await res.json();
                 setIsPremium(data.isPremium);
+                setReloadSongs(prev => !prev); 
             }}>
                 {isPremium ? 'Disable Premium' : 'Enable Premium'}
             </button>

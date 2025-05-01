@@ -22,7 +22,10 @@ const login = (req, res) => {
       return res.status(401).json({ error: 'Wrong username or password!' });
     }
 
-    req.session.account = Account.toAPI(account);
+    req.session.account = {
+      ...Account.toAPI(account),
+      isPremium: account.isPremium,
+    };
 
     return res.json({ redirect: '/home' });
   });
