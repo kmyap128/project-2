@@ -44,11 +44,13 @@ const SongWindow = (props) => {
             method='POST'
             className='SongWindow'
         >
-            <label htmlFor="title">Title: </label>
-            <input type="text" name="title" id="songTitle" placeholder='Song Title' />
-            <label htmlFor="artist">Artist: </label>
-            <input type="text" name="artist" id="songArtist" placeholder='Song Artist' />
-            <input type="submit" className='addSongSubmit' value='Add Song' />
+            <div id='songBox'>
+                <label htmlFor="title">Title: </label>
+                <input type="text" name="title" id="songTitle" placeholder='Song Title' />
+                <label htmlFor="artist">Artist: </label>
+                <input type="text" name="artist" id="songArtist" placeholder='Song Artist' />
+                <input type="submit" className='addSongSubmit' value='Add Song' />
+            </div>
         </form>
     );
 };
@@ -62,9 +64,11 @@ const PlaylistWindow = (props) => {
             method='POST'
             className='PlaylistWindow'
         >
-            <label htmlFor="name">Name: </label>
-            <input type="text" name="name" id="playlistName" placeholder='Playlist Name' />
-            <input type="submit" className='addPlaylistSubmit' value='Add Playlist' />
+            <div id='playlistBox'>
+                <label htmlFor="name">Name: </label>
+                <input type="text" name="name" id="playlistName" placeholder='Playlist Name' />
+                <input type="submit" className='addPlaylistSubmit' value='Add Playlist' />
+            </div>
         </form>
     );
 };
@@ -146,7 +150,7 @@ const SongApp = () =>{
     const [reloadSongs, setReloadSongs] = useState(false);
 
     return (
-        <div>
+        <div id='songPage'>
             <div id='addSong'>
                 <SongWindow triggerReload={() => setReloadSongs(!reloadSongs)} />
             </div>
@@ -161,7 +165,7 @@ const PlaylistApp = ( { openPlaylistEditor } ) => {
     const [reloadPlaylists, setReloadPlaylists] = useState(false);
 
     return (
-        <div>
+        <div id='playlistPage'>
             <div id='addPlaylist'>
                 <PlaylistWindow triggerReload={() => setReloadPlaylists(!reloadPlaylists)} />
             </div>
@@ -219,31 +223,35 @@ const EditPlaylistApp = ({ playlistId }) => {
     console.log(songsInPlaylist.length);
 
     return (
-        <div>
+        <div id='editWindow'>
             <h2>Editing Playlist: {playlist.name}</h2>
             <h3>Songs in Playlist:</h3>
             {songsInPlaylist.length === 0 ? (
                 <p className="emptySong">No songs in this playlist yet!</p>
             ) : (
-                <ul>
+                <div className='editSongList'>
                     {songsInPlaylist.map(song => (
-                        <li key={song._id}>{song.title} - {song.artist}</li>
+                        <div key={song._id} className='song'>
+                            <img src="/assets/img/logo.png" alt="Songify logo" className='songIcon' />
+                            <h3 className='songTitle'>Title: {song.title}</h3>
+                            <h3 className='songArtist'>Artist: {song.artist}</h3>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
 
             <h3>Add Songs:</h3>
             {allSongs.length === 0 ? (
                 <p className="emptySong">No available songs to add.</p>
             ) : (
-                <ul>
+                <div className='addSongList'>
                     {allSongs.map(song => (
-                        <li key={song._id}>
+                        <div key={song._id} className='song'>
                             {song.title} - {song.artist}
-                            <button onClick={() => handleAddSong(song._id)}>Add</button>
-                        </li>
+                            <button onClick={() => handleAddSong(song._id)} id='addButton'>Add</button>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );

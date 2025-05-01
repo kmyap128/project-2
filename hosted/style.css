@@ -138,38 +138,204 @@ nav:nth-child(1) {
 
 
 
-.songWindow {
-    border: 2px solid #6B0A07;
-    height: 35px;
-    width: 1000px;
-    margin-top:0px;
-    padding-top:10px;
-    background-color: #B22F52;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
+.SongWindow {
+    height: 300px;
+    width: 350px;
+    margin:auto;
+    font-size: 1.2em;
 }
 
-.songWindow label {
+#songBox {
+    width: 300px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 2px solid #6B0A07;
+    background-color: #ffc0cb;
+    margin-left: 50px;
+}
+
+.SongWindow label {
     display: inline-block;
-    width: 75px;
-    margin-left: 10px;
+    width: 100px;
+    margin-right: 10px;
+    text-align: right;
     font-size: 1.2em;
-    float: left;
+}
+
+#songTitle, #songArtist {
+    text-align: center;
+    font-size: 1.1em;
+    width: 180px;
+    border-radius: 6px;
+    padding-bottom: 20px;
+}
+
+.SongWindow input {
+    flex: 1;
+    border-radius: 4px;
+    border: none;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+#songPage {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2rem; 
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.PlaylistWindow {
+    height: 300px;
+    width: 350px;
+    margin:auto;
+    font-size: 1.2em;
+}
+
+.PlaylistWindow label {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+    text-align: right;
+    font-size: 1.2em;
+}
+
+.PlaylistWindow input {
+    flex: 1;
+    border-radius: 4px;
+    border: none;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+#playlistName {
+    text-align: center;
+    font-size: 1.1em;
+    width: 180px;
+    border-radius: 6px;
+    padding-bottom: 20px;
+}
+
+#playlistPage {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2rem; 
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+#playlistBox {
+    width: 300px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 2px solid #6B0A07;
+    background-color: #ffc0cb;
+    margin-left: 50px;
+}
+
+.addPlaylistSubmit {
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 120px;
+    background-color: #B22F52;
+    border-radius: 10px;
+    border-color: #6B0A07;
+    padding: 5px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.addPlaylistSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
     color: white;
 }
 
-.songWindow input {
-    float:left;
+.addPlaylistSubmit:hover {
+    transition: background-color 0.4s ease;
+    background-color: #6B0A07;
+}
+
+#editWindow {
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    background-color: #ffc0cb; 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.editSongList {
+    width: 90%;
+    max-width: 800px;
+    height: 500px; 
+    margin: 0 auto;
+    background-color: #f9f9f9; 
+    border: 2px solid #B22F52;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto; 
+}
+
+.addSongList {
+    width: 90%;
+    max-width: 800px;
+    height: 500px; 
+    margin: 0 auto;
+    background-color: #f9f9f9; 
+    border: 2px solid #B22F52;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto; 
+}
+
+#addButton {
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 120px;
+    background-color: white;
+    border-radius: 10px;
+    border-color: #6B0A07;
+    padding: 5px;
+    color: black;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    float: right;
 }
 
 .addSongSubmit {
     transition: background-color 0.4s ease;
-    display: inline;
-    width: 90px;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 120px;
     background-color: #B22F52;
-    border-radius: 2px;
+    border-radius: 10px;
+    border-color: #6B0A07;
+    padding: 5px;
     color: white;
     text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .addSongSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
@@ -181,25 +347,19 @@ nav:nth-child(1) {
     background-color: #6B0A07;
 }
 
-/* 
-#domo {
-    z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
-    -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
-    transform: rotate(330deg);
-} */
-
 #songs {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #B22F52;
-    border-radius: 4px;
+    width: 90%;
+    max-width: 800px;
+    height: 500px; 
     margin: 0 auto;
-    margin-top: 100px;
+    background-color: #f9f9f9; 
+    border: 2px solid #B22F52;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto; 
 }
 
 .song {
@@ -213,6 +373,7 @@ nav:nth-child(1) {
     padding: 10px;
     min-height:60px;
     overflow: hidden;
+    color: white;
 }
 
 .song:hover {
@@ -223,12 +384,18 @@ nav:nth-child(1) {
 }
 
 #playlists {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #B22F52;
-    border-radius: 4px;
+    width: 90%;
+    max-width: 800px;
+    height: 500px; 
     margin: 0 auto;
-    margin-top: 100px;
+    background-color: #f9f9f9; 
+    border: 2px solid #B22F52;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto; 
 }
 
 .playlist {
@@ -242,6 +409,7 @@ nav:nth-child(1) {
     padding: 10px;
     min-height:60px;
     overflow: hidden;
+    color: white;
 }
 
 .playlist:hover {
